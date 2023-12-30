@@ -147,7 +147,7 @@ defaults:
       path: ""
       type: external_feed # see `site.collections`
     values:
-      layout: posts
+      layout: page
       permalink: /:title/
   - scope:
       path: _drafts
