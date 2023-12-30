@@ -131,6 +131,8 @@ collections:
   tabs:
     output: true
     sort_by: order
+  external_feed:
+    output: true
 
 defaults:
   - scope:
