@@ -146,18 +146,12 @@ defaults:
       # to update the code of all other post links in this project.
       permalink: /posts/:title/
   - scope:
-      path: _posts
-      type: external_feed # see `site.collections`
-    values:
-      layout: post
-      permalink: /posts/:title/
-  - scope:
       path: _drafts
     values:
       comments: false
   - scope:
       path: ""
-      type: tabs # see `site.collections`
+      type: external_feed # see `site.collections`
     values:
       layout: page
       permalink: /:title/
