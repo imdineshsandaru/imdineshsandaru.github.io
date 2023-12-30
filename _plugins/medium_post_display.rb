@@ -18,13 +18,35 @@ module Jekyll
         title = e.title
         content = e.content
         guid = e.url
-        path = "./_external_feed/" + title + ".md"
+        date = e.published
+        categories = ['Blogging', 'Demo'] # Add your desired categories
+        tags = ['typography'] # Add your desired tags
+
+        # Create the YAML front matter
+        front_matter = {
+          'title' => title,
+          'author' => 'Your Author Name', # Replace with the actual author name
+          'date' => date,
+          'categories' => categories,
+          'tags' => tags,
+          'pin' => true,
+          'math' => true,
+          'mermaid' => true,
+          'image' => {
+            'path' => '/commons/devices-mockup.png',
+            'lqip' => 'data:image/webp;base64,UklGRpoAAABXRUJQVlA4WAoAAAAQAAAADwAABwAAQUxQSDIAAAARL0AmbZurmr57yyIiqE8oiG0bejIYEQTgqiDA9vqnsUSI6H+oAERp2HZ65qP/VIAWAFZQOCBCAAAA8AEAnQEqEAAIAAVAfCWkAALp8sF8rgRgAP7o9FDvMCkMde9PK7euH5M1m6VWoDXf2FkP3BqV0ZYbO6NA/VFIAAAA',
+            'alt' => 'Responsive rendering of Chirpy theme on multiple devices.'
+          }
+        }
+
+        # Combine YAML front matter with content
+        document_content = "#{front_matter.to_yaml}\n---\n#{content}"
+
+        # Create the Jekyll document
+        path = "_posts/#{date.strftime('%Y-%m-%d')}-#{title.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')}.md"
         path = site.in_source_dir(path)
         doc = Jekyll::Document.new(path, { :site => site, :collection => jekyll_coll })
-        doc.data['title'] = title
-        doc.data['feed_content'] = content
-        doc.data['guid'] = guid # Assuming you want to store the URL as a unique identifier
-        doc.data['generator'] = generator # Add the generator attribute
+        doc.content = document_content
         jekyll_coll.docs << doc
       end
     end
